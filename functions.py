@@ -20,17 +20,8 @@ def print_tulpe_list(list, top100=False):
         else:
             print('{:>3}. {:<55} {:>3} plays'.format(index + 1, bold(item[0]), item[1]))
 
-def print_top100_plays(list):
-    print('\n\n{0}\n'.format(bold('TOP 100')))
-    print_tulpe_list(list, top100=True)
-    print('\n\n')
-    print_plays(list, top100=True)
-
-def print_18xx_plays(list):
-    print('\n\n{0}\n'.format(bold('18xx')))
-    print_plays(list)
-
-def print_plays(list, top100=False):
+def print_plays(list, title, top100=False):
+    print('\n\n{0}\n'.format(bold(title)))
     print_tulpe_list(sort_by_plays(list), top100)
     print('\nPlayed games: {0}/{1}'.format(len([item for item in list if item[1] > 0]), len(list)))
     print('All plays: {0}'.format(sum([item[1] for item in list])))
