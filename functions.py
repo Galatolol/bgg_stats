@@ -55,7 +55,7 @@ def get_plays(list, min_date, top100=False):
         try:
             game_plays = int(parse_xml(url_plays).attrib['total'])
         except ElementTree.ParseError:
-            pass
+            game_plays = 0
 
         if top100:
             plays_list.append((game_name, game_plays, item[2]))
