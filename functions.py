@@ -50,9 +50,12 @@ def get_plays(list, min_date, top100=False):
     for item in list:
         game_id = item[0]
         game_name = item[1]
+        url_plays = 'https://www.boardgamegeek.com/xmlapi2/plays?mindate=' + min_date + '&id=' + game_id
 
-        url_plays = 'https://www.boardgamegeek.com/xmlapi2/plays?' + 'mindate=' + min_date + '&id=' + game_id
-        game_plays = int(parse_xml(url_plays).attrib['total'])
+        try:
+            game_plays = int(parse_xml(url_plays).attrib['total'])
+        except ElementTree.ParseError:
+            pass
 
         if top100:
             plays_list.append((game_name, game_plays, item[2]))
