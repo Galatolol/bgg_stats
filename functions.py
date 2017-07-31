@@ -3,15 +3,23 @@ from urllib.request import urlretrieve, urlopen
 from xml.etree import ElementTree
 from bs4 import BeautifulSoup
 
+############################
+
 def bold(string):
     return '\033[1m' + string + '\033[0m'
+
+############################
 
 def parse_xml(url):
     file = urlopen(url)
     return ElementTree.parse(file).getroot()
 
+############################
+
 def sort_by_plays(list):
     return sorted(list, key=lambda tup: tup[1], reverse=True)
+
+############################
 
 def print_tulpe_list(list, top100=False):
     for index, item in enumerate(list):
@@ -19,6 +27,8 @@ def print_tulpe_list(list, top100=False):
             print('{:>3}. {:<80} {:>5} plays - BGG ranking: {:>3}'.format(index + 1, bold(item[0]), item[1], item[2]))
         else:
             print('{:>3}. {:<55} {:>3} plays'.format(index + 1, bold(item[0]), item[1]))
+
+############################
 
 def print_plays(list, title, top100=False):
     print('\n\n{0}\n'.format(bold(title)))
@@ -33,6 +43,8 @@ def get_games_list_18xx():
     list = parse_xml(url_18xx).findall('./item/link')
     return [(item.attrib['id'], item.attrib['value']) for item in list if item.attrib['id'] not in open('18xx_extensions_id', 'r').read()]   # remove extensions from the list
 
+############################
+
 def get_games_list_top100():
     urlretrieve('http://boardgamegeek.com/browse/boardgame', filename='top100_html')
     with open('top100_html') as file_top100:
@@ -45,12 +57,16 @@ def get_games_list_top100():
 
     return list
 
+############################
+
 def get_plays(list, min_date, top100=False):
     plays_list = []
     for item in list:
         game_id = item[0]
         game_name = item[1]
         url_plays = 'https://www.boardgamegeek.com/xmlapi2/plays?mindate=' + min_date + '&id=' + game_id
+
+        print('Executing... Current game: {0}'.format(game_name))
 
         try:
             game_plays = int(parse_xml(url_plays).attrib['total'])
@@ -61,7 +77,6 @@ def get_plays(list, min_date, top100=False):
             plays_list.append((game_name, game_plays, item[2]))
         else:
             plays_list.append((game_name, game_plays))
-        print('Executing... Current game: {0}'.format(game_name))
 
         if len(plays_list) % 15 == 0:   # little break, so there aren't too many requests
             time.sleep(30)
