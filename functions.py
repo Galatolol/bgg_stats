@@ -16,6 +16,7 @@ def set_global_dates(min_date, max_date):
 def bold(string):
     return '\033[1m{0}\033[0m'.format(string)
     #return '**{0}**'.format(string)   # reddit bold
+    #return '[b]{0}[/b]'.format(string)   # [b][/b] tags bold
 
 ############################
 
