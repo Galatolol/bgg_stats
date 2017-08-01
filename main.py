@@ -1,10 +1,15 @@
 import datetime
-from functions import print_plays, get_plays, get_games_list_top100, get_games_list_18xx
+from functions import print_plays, get_plays, get_games_list_top100, get_games_list_18xx, get_user_plays, set_global_dates
 
-min_date = str(datetime.date.today() - datetime.timedelta(days=30))   # current date minus 30 days
+min_date = str(datetime.date.today() - datetime.timedelta(days=31))   # current date minus 30 days
+max_date = str(datetime.date.today())
+set_global_dates(min_date, max_date)
 
-print_plays(get_plays(get_games_list_top100(), min_date, True), 'TOP 100', True)
-print_plays(get_plays(get_games_list_18xx(), min_date), '18xx')
+print_plays(get_plays(get_games_list_top100(), True), 'TOP 100')
+print_plays(get_plays(get_games_list_18xx()), '18xx')
+
+username = 'Galatolol'
+print_plays(get_user_plays(username), username)
 
 
 
