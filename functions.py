@@ -31,20 +31,33 @@ def sort_by_plays(list):
 
 ############################
 
-def print_tulpe_list(list):
-    for index, item in enumerate(list):
-        if len(list[0]) == 3:   # if BGG ranking is linked
-            print('{:>3}. {:<80} {:>5} plays - BGG ranking: {:>3}'.format(index+1, bold(item[0]), item[1], item[2]))
-        else:
+def print_tulpe_list(list)
+    if len(list) == 0:
+        return
+    if len(list[0]) == 3:   # if a BGG ranking associated
+        for index, item in enumerate(list):
+            print('{:<3}. {:<80} {:>5} plays - BGG ranking: {:>3}'.format(index + 1, bold(item[0]), item[1], item[2]))
+    else:
+        for index, item in enumerate(list):
             print('{:>3}. {:<60} {:>3} plays'.format(index+1, bold(item[0]), item[1]))
+
+
+    # if len(list[0]) == 3:
+    #     print('No.|Game|Number of plays|BGG ranking\n---:|:---|---:|---:')
+    #     for index, item in enumerate(list):
+    #         print('{0}.|{1}|{2}|{3}'.format(index+1, bold(item[0]), item[1], item[2]))
+    # else:
+    #     print('No.|Game|Number of plays\n---:|:---|---:')
+    #     for index, item in enumerate(list):
+    #         print('{0}|{1}|{2}'.format(index+1, bold(item[0]), item[1]))   # reddit
 
 ############################
 
 def print_plays(list, title):
-    print('\n\n{0} plays from {1} to {2}\n'.format(bold(title), min_date_glob, max_date_glob))
+    print('\n\n{0} plays from {1} to {2}\n'.format(bold(title), bold(min_date_glob), bold(max_date_glob)))
     print_tulpe_list(sort_by_plays(list))
-    print('\nPlayed games: {0}/{1}'.format(len([item for item in list if item[1] > 0]), len(list)))
-    print('All plays: {0}'.format(sum([item[1] for item in list])))
+    print('\nPlayed games: {0}/{1}'.format(bold(len([item for item in list if item[1] > 0])), bold(len(list))))
+    print('All plays: {0}'.format(bold(sum([item[1] for item in list]))))
 
 ############################
 
@@ -101,9 +114,7 @@ def get_user_plays(username):
 
     dictionary, user_plays_list = {}, []
     for child in user_plays:
-        for child1 in child:
-            game_name = child1.attrib['name']
-        dictionary.setdefault(game_name, []).append(child.attrib['quantity'])
+        dictionary.setdefault(child[0].attrib['name'], []).append(child.attrib['quantity'])
 
     # sum all plays of the same game
     for item, item1 in dictionary.items():
