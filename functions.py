@@ -31,12 +31,12 @@ def sort_by_plays(list):
 
 ############################
 
-def print_tulpe_list(list)
+def print_tulpe_list(list):
     if len(list) == 0:
         return
     if len(list[0]) == 3:   # if a BGG ranking associated
         for index, item in enumerate(list):
-            print('{:<3}. {:<80} {:>5} plays - BGG ranking: {:>3}'.format(index + 1, bold(item[0]), item[1], item[2]))
+            print('{:>3}. {:<80} {:>5} plays - BGG ranking: {:>3}'.format(index + 1, bold(item[0]), item[1], item[2]))
     else:
         for index, item in enumerate(list):
             print('{:>3}. {:<60} {:>3} plays'.format(index+1, bold(item[0]), item[1]))
