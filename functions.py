@@ -92,7 +92,7 @@ def get_plays(list, top100=False):
         print('Executing... Current game: {0}'.format(game_name))
 
         try:
-            game_plays = int(get_xml_root(url_plays).attrib['total'])
+            game_plays = int(get_xml_root(url_plays).tag['total'])
         except ElementTree.ParseError:
             game_plays = 0
 
@@ -105,6 +105,29 @@ def get_plays(list, top100=False):
             time.sleep(30)
 
     return plays_list
+
+############################
+
+def print_amateur_publishers(list): # (Web published) or (Self-Published)
+    i = 0
+    for item in list:
+        i += 1
+        publishers = []
+        game_id = item[0]
+        game_name = item[1]
+        root = get_xml_root('https://www.boardgamegeek.com/xmlapi/boardgame/{0}'.format(game_id))
+        try:
+            publishers = root.findall('boardgame/boardgamepublisher')
+        except ElementTree.ParseError:
+            pass
+        if [x for x in publishers if x.text != '(Self-Published)' and x.text != '(Web published)']:
+            continue
+        print('{0}'.format(game_name))
+        for publisher in publishers:
+            print('{0}'.format(publisher.text))
+        print('\n')
+        if i % 15 == 0:   # little break, so there aren't too many requests
+            time.sleep(30)
 
 ############################
 
