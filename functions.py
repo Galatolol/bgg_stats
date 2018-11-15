@@ -123,6 +123,7 @@ def print_amateur_publishers(list): # (Web published) or (Self-Published)
         if [x for x in publishers if x.text != '(Self-Published)' and x.text != '(Web published)']:
             continue
         print('{0}'.format(game_name))
+        print('https://boardgamegeek.com/boardgame/{0}'.format(game_id))
         for publisher in publishers:
             print('{0}'.format(publisher.text))
         print('\n')
